@@ -215,6 +215,13 @@ public class IntroFrame extends JFrame {
 
                 detailTable = new JTable(detailTableModel);
                 detailTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                detailTable.getSelectionModel().addListSelectionListener(
+                    (e)->{
+                        if(!e.getValueIsAdjusting()){
+                            loadTheDetails();
+                        }
+                    }
+                    );
 
                 JScrollPane scrollPane = new JScrollPane(detailTable);
                 add(scrollPane, BorderLayout.CENTER);
