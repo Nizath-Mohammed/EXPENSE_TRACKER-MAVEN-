@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
 public class IntroFrame extends JFrame {
     private JButton categoryButton;
     private JButton expenseButton;
@@ -62,7 +64,7 @@ public class IntroFrame extends JFrame {
         private JButton addButton;
         private JButton viewButton;
         private JButton deleteButton;
-        private JTable categoryTabel;
+        private JTable categoryTable;
         private DefaultTableModel tableModel;
         
         public catagoryFrame(){
@@ -70,6 +72,7 @@ public class IntroFrame extends JFrame {
             setSize(400,400);
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             initializeComponent();
+            setUpActionListener();
         }
         private void initializeComponent(){
             setLayout(new BorderLayout());
@@ -93,9 +96,27 @@ public class IntroFrame extends JFrame {
             centerPanel.add(this.viewButton);
             centerPanel.add(this.deleteButton);
             String[] columnNames={"Catagory Name"};
-            tableModel =new DefaultTableModel(columnNames,0);
-            this.categoryTabel =new JTable(tableModel);
-            JScrollPane scrollPane =new JScrollPane(this.categoryTabel);
+            this.tableModel =new DefaultTableModel(columnNames,0){
+                @Override 
+                public boolean isCellEditable(int row,int column){
+                    return false;
+                }
+            };
+            this.categoryTable =new JTable(tableModel);
+            this.categoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.categoryTable.getSelectionModel().addListSelectionListener(
+                (e)->{
+                    if(!e.getValueIsAdjusting()){
+                            int row = categoryTable.getSelectedRow();
+                            if(row!=-1){
+                                String selectedCategory =tableModel.getValueAt(row,0).toString();
+                                CategoryNameField.setText(selectedCategory);
+                            }
+                    }
+                }
+
+            );
+            JScrollPane scrollPane =new JScrollPane(this.categoryTable);
             scrollPane.setPreferredSize(new Dimension(350,300));
             centerPanel.add(new JPanel()); // empty panel for spacing
             centerPanel.add(scrollPane);
@@ -106,6 +127,34 @@ public class IntroFrame extends JFrame {
 
 
         }
+        private void setUpActionListener(){
+            this.addButton.addActionListener(
+                (e)->{
+
+                }
+            );
+            this.viewButton.addActionListener(
+                (e)->{
+                    String curr =this.CategoryNameField.getText().toString().trim();
+                    if(!curr.isEmpty()){
+                        new DetailFrame().setVisible(true);
+                    }
+                }
+            );
+            this.deleteButton.addActionListener(
+                (e)->{
+
+                }
+            );
+        }
+        private class DetailFrame extends JFrame{
+            public DetailFrame(){
+                setTitle("Detail Frame");
+                setSize(400,600);
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        }
+        
 
     }
     private class ExpenseFrame extends JFrame{
@@ -113,6 +162,7 @@ public class IntroFrame extends JFrame {
             setTitle("Expense Frame");
             setSize(400,600);
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            initializeComponent();
         }
 
     }
