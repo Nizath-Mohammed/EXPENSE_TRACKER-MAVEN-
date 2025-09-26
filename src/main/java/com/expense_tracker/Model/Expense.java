@@ -2,21 +2,21 @@ package com.expense_tracker.Model;
 import java.time.LocalDate;
 public class Expense{
     private int id;
-    private String name;
     private String category;
     private int amount;
     private String description;
     private LocalDate date;
-    public Expense(String name,String e,int amount,String description){
-        this.name=name;
+    public Expense(){
+
+    }
+    public Expense(String category,int amount,String description){
         this.category=category;
         this.amount=amount;
         this.description=description;
         this.date= LocalDate.now();
     }
-    public Expense(int id,String name,String category,int amount,String description,LocalDate date){
+    public Expense(int id,String category,int amount,String description,LocalDate date){
         this.id=id;
-        this.name=name;
         this.category=category;
         this.amount=amount;
         this.description=description;
@@ -26,10 +26,8 @@ public class Expense{
     public void setId(int id){
         this.id=id;
     }
-    public void setName(String name){
-        this.name=name;
-    }
-    public void setCategory(String catagory){
+
+    public void setCategory(String category){
         this.category=category;
     }
     public void setAmount(int amount){
@@ -43,7 +41,6 @@ public class Expense{
     }
     // getter
     public int getId(){ return id;}
-    public String getName(){ return name;}
     public String getCategory(){ return category;}  
     public int getAmount(){ return amount;}
     public String getDescription(){ return description;}

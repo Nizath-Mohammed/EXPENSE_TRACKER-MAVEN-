@@ -1,9 +1,12 @@
 com\expense_tracker\util\DatabaseConnection.class
 com\expense_tracker\GUI\IntroFrame.class
-com\expense_tracker\GUI\IntroFrame$catagoryFrame$1.class
+com\expense_tracker\GUI\IntroFrame$CategoryFrame.class
+com\expense_tracker\GUI\IntroFrame$CategoryFrame$1.class
 com\expense_tracker\Model\Expense.class
 com\expense_tracker\Main.class
-com\expense_tracker\GUI\IntroFrame$catagoryFrame$DetailFrame.class
-com\expense_tracker\GUI\IntroFrame$catagoryFrame.class
+com\expense_tracker\dao\ExpenseDAO.class
+com\expense_tracker\GUI\IntroFrame$CategoryFrame$DetailFrame.class
 com\expense_tracker\Model\Catagory.class
+com\expense_tracker\dao\CategoryDAO.class
 com\expense_tracker\GUI\IntroFrame$ExpenseFrame.class
+com\expense_tracker\GUI\IntroFrame$CategoryFrame$DetailFrame$1.class
