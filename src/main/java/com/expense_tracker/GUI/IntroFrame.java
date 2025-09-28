@@ -163,18 +163,18 @@ public class IntroFrame extends JFrame {
             });
 
             deleteButton.addActionListener(e -> {
-                // int row = categoryTable.getSelectedRow();
-                // if(row!=-1){
-                //     String catagoryName =tableModel.getValueAt(row,0).toString();
-                //     try{
-                //         catagorydao.deleteCatagory(catagoryName);
-                //         loadTheDetails();
-                //         JOptionPane.showMessageDialog(this, "Category deleted successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                //     }
-                //     catch(Exception ex){
-                //         JOptionPane.showMessageDialog(this, "Error deleting category: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                //     }
-                // }
+                int row = categoryTable.getSelectedRow();
+                if(row!=-1){
+                    String catagoryName =tableModel.getValueAt(row,0).toString();
+                    try{
+                        catagorydao.deleteCatagory(catagoryName);
+                        loadTheDetails();
+                        JOptionPane.showMessageDialog(this, "Category deleted successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    catch(Exception ex){
+                        JOptionPane.showMessageDialog(this, "Error deleting category: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             });
         }
 
