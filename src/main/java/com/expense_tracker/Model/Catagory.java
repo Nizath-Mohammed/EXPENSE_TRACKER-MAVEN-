@@ -1,7 +1,7 @@
 package com.expense_tracker.Model;
 public class Catagory{
     String name;
-    private Catagory(String name){
+    public  Catagory(String name){
         this.name=name;
     }
     // Getter

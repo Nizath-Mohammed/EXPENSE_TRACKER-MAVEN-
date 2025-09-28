@@ -1,6 +1,8 @@
 package com.expense_tracker.GUI;
 
 import com.expense_tracker.dao.ExpenseDAO;
+import com.expense_tracker.dao.CategoryDAO;
+import com.expense_tracker.Model.Catagory;
 import com.expense_tracker.Model.Expense;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -51,6 +53,7 @@ public class IntroFrame extends JFrame {
         private JButton addButton, viewButton, deleteButton;
         private JTable categoryTable;
         private DefaultTableModel tableModel;
+        private CategoryDAO catagorydao;
 
         public CategoryFrame() {
             setTitle("Category Frame");
@@ -58,11 +61,31 @@ public class IntroFrame extends JFrame {
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             initializeComponent();
             setUpActionListener();
+            loadTheDetails();
+        }
+        private void updateTable(List<Catagory> categories){
+            tableModel.setRowCount(0);
+            for(Catagory c:categories){
+                Object[] temp = {
+                    c.getName()
+                };
+                tableModel.addRow(temp);
+            }
+        }
+        private void loadTheDetails() {
+            try{
+                updateTable(catagorydao.getAllCatagory());
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Error fetching categories: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            // Load categories from database and update table
+            // This method can be implemented to fetch categories and display them in the table
         }
 
         private void initializeComponent() {
             setLayout(new BorderLayout());
-
+            this.catagorydao = new CategoryDAO();
             JPanel northPanel = new JPanel(new GridBagLayout());
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.insets = new Insets(5, 5, 5, 5);
@@ -117,7 +140,19 @@ public class IntroFrame extends JFrame {
 
         private void setUpActionListener() {
             addButton.addActionListener(e -> {
-                // empty for now
+                String catagoryName =categoryNameField.getText().trim();
+                if(!catagoryName.isEmpty()){
+                    try{
+                            catagorydao.addCatagory(catagoryName);
+                            JOptionPane.showMessageDialog(this, "Category added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    catch(Exception ex){
+                        JOptionPane.showMessageDialog(this, "Error adding category: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Category name cannot be empty", "Warning", JOptionPane.WARNING_MESSAGE);   
+                }
             });
 
             viewButton.addActionListener(e -> {
@@ -128,7 +163,18 @@ public class IntroFrame extends JFrame {
             });
 
             deleteButton.addActionListener(e -> {
-                // empty for now
+                // int row = categoryTable.getSelectedRow();
+                // if(row!=-1){
+                //     String catagoryName =tableModel.getValueAt(row,0).toString();
+                //     try{
+                //         catagorydao.deleteCatagory(catagoryName);
+                //         loadTheDetails();
+                //         JOptionPane.showMessageDialog(this, "Category deleted successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                //     }
+                //     catch(Exception ex){
+                //         JOptionPane.showMessageDialog(this, "Error deleting category: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                //     }
+                // }
             });
         }
 
